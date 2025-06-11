@@ -1,0 +1,6 @@
+{
+  "~/Coding/multiplayer": {
+    "name": "multiplayer",
+    "command": "g++ client.cpp -o client -lraylib && ./client"
+  }
+}

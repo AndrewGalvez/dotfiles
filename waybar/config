@@ -1,0 +1,22 @@
+{
+  "layer": "top",
+  "modules-left": ["hyprland/workspaces", "clock", "mpris"],
+  "modules-center": ["hyprland/window"],
+  "modules-right": ["pulseaudio"],
+  "clock": {
+    "format": "{:%I:%M}",
+    "tooltip": false,
+    "format-empty": "",
+  },
+
+  "pulseaudio": {
+    "format": "audio: {volume}%",
+    "on-click": "exec pavucontrol",
+    "tooltip": false
+  },
+
+  "mpris": {
+    "format": "{status} - {title} ({artist} - {album})",
+  },
+
+}
