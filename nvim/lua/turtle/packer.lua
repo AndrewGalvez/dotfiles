@@ -69,4 +69,8 @@ return require('packer').startup(function(use)
 	})
 
 	use 'CRAG666/code_runner.nvim'
+
+	use 'CRAG666/betterTerm.nvim'
+
+	use 'rachartier/tiny-inline-diagnostic.nvim'
 end)

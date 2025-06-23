@@ -45,12 +45,18 @@ window#waybar {
   background: @pine;
 }
 
-#workspaces, #clock, #pulseaudio, #mpris, #window {
+#workspaces, #clock, #pulseaudio, #mpris, #window, #power-profiles-daemon, #backlight, #battery {
   background: @surface;
   padding: 5px 10px;
   margin: 2px;
   color: @gold;
 }
+
+#power-profiles-daemon { color: @foam; }
+
+#backlight { color: @love; }
+
+#battery { color: @rose; }
 
 #clock {
   color: @rose;
@@ -63,5 +69,3 @@ window#waybar {
 #mpris {
   color: @iris;
 }
-
-

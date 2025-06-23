@@ -2,7 +2,7 @@
   "layer": "top",
   "modules-left": ["hyprland/workspaces", "clock", "mpris"],
   "modules-center": ["hyprland/window"],
-  "modules-right": ["pulseaudio"],
+  "modules-right": ["pulseaudio", "battery", "backlight", "power-profiles-daemon"],
   "clock": {
     "format": "{:%I:%M}",
     "tooltip": false,
@@ -18,5 +18,9 @@
   "mpris": {
     "format": "{status} - {title} ({artist} - {album})",
   },
+
+  "power-profiles-daemon": {
+    "format": "{}",
+  }
 
 }

@@ -18,7 +18,10 @@ require('cmp').setup({
 
 lspconfig.rust_analyzer.setup({})
 lspconfig.lua_ls.setup({})
-lspconfig.clangd.setup({})
+
+require('lspconfig').clangd.setup {
+  capabilities = require('cmp_nvim_lsp').default_capabilities(),
+}
 
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*",
@@ -26,3 +29,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
         vim.lsp.buf.format()
     end,
 })
+
+
+

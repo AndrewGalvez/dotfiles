@@ -1,6 +1,9 @@
 {
   "~/Coding/multiplayer": {
     "name": "multiplayer",
-    "command": "g++ client.cpp -o client -lraylib && ./client"
-  }
+    "command": "g++ src/client.cpp -o bin/client -lraylib && bin/client"
+ },
+ "~/Coding/sdl_tesgt": {
+   "command": "g++ main.cpp -o main -lsdl && ./main"
+ }
 }

@@ -79,6 +79,11 @@ _G.packer_plugins = {
     path = "/home/turtle/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
+  ["betterTerm.nvim"] = {
+    loaded = true,
+    path = "/home/turtle/.local/share/nvim/site/pack/packer/start/betterTerm.nvim",
+    url = "https://github.com/CRAG666/betterTerm.nvim"
+  },
   ["cmp-buffer"] = {
     loaded = true,
     path = "/home/turtle/.local/share/nvim/site/pack/packer/start/cmp-buffer",
@@ -195,6 +200,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/turtle/.local/share/nvim/site/pack/packer/start/tint.nvim",
     url = "https://github.com/levouh/tint.nvim"
+  },
+  ["tiny-inline-diagnostic.nvim"] = {
+    loaded = true,
+    path = "/home/turtle/.local/share/nvim/site/pack/packer/start/tiny-inline-diagnostic.nvim",
+    url = "https://github.com/rachartier/tiny-inline-diagnostic.nvim"
   },
   undotree = {
     loaded = true,
