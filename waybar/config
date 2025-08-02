@@ -1,26 +1,26 @@
 {
-  "layer": "top",
-  "modules-left": ["hyprland/workspaces", "clock", "mpris"],
-  "modules-center": ["hyprland/window"],
-  "modules-right": ["pulseaudio", "battery", "backlight", "power-profiles-daemon"],
+  "layer": "overlay",
+  "mode": "overlay",
+  "position": "bottom",
+  "modules-right": ["clock",
+  "pulseaudio", "network"],
   "clock": {
     "format": "{:%I:%M}",
     "tooltip": false,
-    "format-empty": "",
+    "format-empty": ""
   },
-
   "pulseaudio": {
     "format": "audio: {volume}%",
     "on-click": "exec pavucontrol",
     "tooltip": false
   },
-
-  "mpris": {
-    "format": "{status} - {title} ({artist} - {album})",
+  "network": {
+    "format-wifi": "{essid}",
+    "format-ethernet": "{ifname}",
+    "format-disconnected": "Disconnected"
   },
-
-  "power-profiles-daemon": {
-    "format": "{}",
+  "custom/steamgames": {
+    "exec": "$HOME/.config/waybar/steam.sh", 
+    "interval": 30
   }
-
 }

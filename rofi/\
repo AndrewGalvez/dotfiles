@@ -1,0 +1,16 @@
+configuration {
+  modes: [ combi ];
+  combi-modes: [ window, drun, run ];
+  fullscreen: false;
+}
+
+@theme "/usr/share/rofi/themes/sidebar.rasi"
+
+window {
+  location: west;
+  anchor:		 west;
+  height:		 92%;
+  width:		 22%;
+  x-offset: 0;
+  y-offset: 0;
+}

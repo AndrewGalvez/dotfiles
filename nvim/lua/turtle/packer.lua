@@ -25,6 +25,8 @@ return require('packer').startup(function(use)
 
 	use 'nvim-treesitter/playground'
 
+	use 'mikavilpas/yazi.nvim'
+
 	use 'theprimeagen/harpoon'
 
 	use 'mbbill/undotree'
@@ -47,8 +49,6 @@ return require('packer').startup(function(use)
 
 	use 'saadparwaiz1/cmp_luasnip'
 
-	use 'nvim-tree/nvim-tree.lua'
-
 	use { 'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async' }
 
 	use 'mhartington/formatter.nvim'
@@ -70,7 +70,11 @@ return require('packer').startup(function(use)
 
 	use 'CRAG666/code_runner.nvim'
 
-	use 'CRAG666/betterTerm.nvim'
-
 	use 'rachartier/tiny-inline-diagnostic.nvim'
+	use {
+		"aznhe21/actions-preview.nvim",
+		config = function()
+			vim.keymap.set({ "v", "n" }, "gf", require("actions-preview").code_actions)
+		end,
+	}
 end)

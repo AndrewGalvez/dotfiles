@@ -5,5 +5,15 @@
  },
  "~/Coding/sdl_tesgt": {
    "command": "g++ main.cpp -o main -lsdl && ./main"
+ },
+ "~/Coding/pixel": {
+   "command": "g++ main.cpp -o main -lraylib && ./main"
+ },
+ "~/Coding/7segcounter": {
+   "command": "g++ main.cpp -o main -lraylib && ./main"
+ },
+ "~/Coding/crab": {
+   "name": "crab",
+   "command": "g++ main.cpp -o main -lraylib && ./main"
  }
 }

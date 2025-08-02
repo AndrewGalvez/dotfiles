@@ -2,33 +2,39 @@ local lspconfig = require('lspconfig')
 local cmp = require('cmp')
 
 require('cmp').setup({
-  snippet = {
-    expand = function(args) require('luasnip').lsp_expand(args.body) end,
-  },
-  mapping = cmp.mapping.preset.insert({
-    ['<Tab>'] = cmp.mapping.select_next_item(),
-    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
-  }),
-  sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-  })
+	snippet = {
+		expand = function(args) require('luasnip').lsp_expand(args.body) end,
+	},
+	mapping = cmp.mapping.preset.insert({
+		['<Tab>'] = cmp.mapping.select_next_item(),
+		['<S-Tab>'] = cmp.mapping.select_prev_item(),
+		['<CR>'] = cmp.mapping.confirm({ select = true }),
+	}),
+	sources = cmp.config.sources({
+		{ name = 'nvim_lsp' },
+		{ name = 'luasnip' },
+	})
 })
 
 lspconfig.rust_analyzer.setup({})
 lspconfig.lua_ls.setup({})
 
 require('lspconfig').clangd.setup {
-  capabilities = require('cmp_nvim_lsp').default_capabilities(),
+	capabilities = require('cmp_nvim_lsp').default_capabilities(),
 }
 
 vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = "*",
-    callback = function()
-        vim.lsp.buf.format()
-    end,
+	pattern = "*",
+	callback = function()
+		vim.lsp.buf.format()
+	end,
 })
 
+local function quickfix()
+	vim.lsp.buf.code_action({
+		filter = function(a) return a.isPreferred end,
+		apply = true
+	})
+end
 
-
+vim.keymap.set('n', '<leader>qf', quickfix, { noremap = true, silent = true })

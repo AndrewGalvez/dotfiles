@@ -1,12 +1,5 @@
-require('betterTerm').setup();
-
-local betterTerm = require('betterTerm')
--- toggle firts term
-vim.keymap.set({"n", "t"}, "<leader>to", betterTerm.open, { desc = "Open terminal"})
--- Select term focus
-vim.keymap.set({"n"}, "<leader>tt", betterTerm.select, { desc = "Select terminal"})
-
 require('code_runner').setup({
+	focus = false,
 	project_path = '/home/turtle/.config/nvim/lua/turtle/projects.json',
 	filetype = {
 		java = {
