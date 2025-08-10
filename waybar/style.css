@@ -31,7 +31,7 @@
 }
 
 window#waybar {
-  background-color: rgba(0,0,0,0);
+  background-color: @base;
   color: @text;
   opacity: 0.8;
 }
@@ -46,7 +46,7 @@ window#waybar {
   background: @pine;
 }
 
-#network, #workspaces, #clock, #pulseaudio, #mpris, #window, #power-profiles-daemon, #backlight, #battery, #custom-steamgames {
+#network, #workspaces, #clock, #pulseaudio, #mpris, #window, #power-profiles-daemon, #backlight, #battery, #custom-todo {
   background: @surface;
   padding: 5px 10px;
   margin: 2px;
@@ -69,4 +69,9 @@ window#waybar {
 
 #mpris {
   color: @iris;
+}
+
+#custom-todo {
+  background-color: red;
+  color: white;
 }

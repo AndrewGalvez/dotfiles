@@ -1,9 +1,8 @@
 {
-  "layer": "overlay",
-  "mode": "overlay",
+  "layer": "top",
   "position": "bottom",
-  "modules-right": ["clock",
-  "pulseaudio", "network"],
+  "modules-right": ["hyprland/workspaces", "clock",
+  "pulseaudio", "network", "power-profiles-daemon", "battery", "backlight", "custom/todo"],
   "clock": {
     "format": "{:%I:%M}",
     "tooltip": false,
@@ -19,8 +18,12 @@
     "format-ethernet": "{ifname}",
     "format-disconnected": "Disconnected"
   },
-  "custom/steamgames": {
-    "exec": "$HOME/.config/waybar/steam.sh", 
+  "custom/todo": {
+    "exec": "$HOME/.config/waybar/todo.sh", 
     "interval": 30
+  },
+  "power-profiles-daemon":
+  {
+    "format": "{}"
   }
 }
