@@ -1,10 +1,11 @@
 {
-  "layer": "top",
+  "layer": "overlay",
+  "mode": "overlay",
   "position": "bottom",
-  "modules-right": ["hyprland/workspaces", "clock",
+  "modules-right": ["hyprland/workspaces", "clock", "date",
   "pulseaudio", "network", "power-profiles-daemon", "battery", "backlight", "custom/todo"],
   "clock": {
-    "format": "{:%I:%M}",
+    "format": "{:%I:%M %a %d %b}",
     "tooltip": false,
     "format-empty": ""
   },
