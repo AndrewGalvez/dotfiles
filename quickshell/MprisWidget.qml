@@ -96,6 +96,17 @@ Timer {
                 anchors.margins: 20
                 spacing: 15
 
+		RowLayout {
+		  Layout.alignment: Qt.AlignCenter
+		  Layout.fillWidth: true
+
+		  Image {
+		  source: mprisPlayer.trackArtUrl
+		  sourceSize.width: 100
+		  sourceSize.height: 100
+		  cache: true
+		}
+
                 Text {
                     text: txt
                     font.pixelSize: 18
@@ -108,6 +119,7 @@ Timer {
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.WordWrap
                 }
+	      }
 
                 ColumnLayout {
                     Layout.alignment: Qt.AlignCenter
