@@ -1,0 +1,9 @@
+@import "default"
+
+configuration {
+  modi: "window,drun,calc,emoji,blocks";
+}
+
+//@theme "/usr/share/rofi/themes/fullscreen-preview.rasi"
+
+@theme "/usr/share/rofi/themes/sidebar.rasi"
