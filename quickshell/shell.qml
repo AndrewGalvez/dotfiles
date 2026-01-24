@@ -1,4 +1,5 @@
 import Quickshell
+import Quickshell.Services.SystemTray
 import Quickshell.Wayland
 import Quickshell.Io
 import Quickshell.Hyprland
@@ -212,6 +213,7 @@ ShellRoot {
                     Item { width: 8 }
 
                     Item { width: 8 }
+
 
                     Repeater {
                         model: 9
