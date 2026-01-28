@@ -65,8 +65,8 @@ Variants {
 					Repeater {
 						model: buttons
 						delegate: Rectangle {
-						  radius:25
-							required property LogoutButton modelData;
+						  radius: 0
+						  required property LogoutButton modelData;
 
 							Layout.fillWidth: true
 							Layout.fillHeight: true
@@ -77,7 +77,7 @@ Variants {
 
 							Behavior on color {
 							  ColorAnimation {
-							    duration: 200
+							    duration: 400
 							    easing.type: Easing.InOutQuad
 							  }
 							}

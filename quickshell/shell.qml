@@ -117,20 +117,6 @@ ShellRoot {
         Component.onCompleted: running = true
     }
 
-    // Active window title
-    Process {
-        id: windowProc
-        command: ["sh", "-c", "hyprctl activewindow -j | jq -r '.title // empty'"]
-        stdout: SplitParser {
-            onRead: data => {
-                if (data && data.trim()) {
-                    activeWindow = data.trim()
-                }
-            }
-        }
-        Component.onCompleted: running = true
-    }
-
     // Current layout (Hyprland: dwindle/master/floating)
     Process {
         id: layoutProc
@@ -162,7 +148,6 @@ ShellRoot {
     Connections {
         target: Hyprland
         function onRawEvent(event) {
-            windowProc.running = true
             layoutProc.running = true
         }
     }
@@ -173,7 +158,6 @@ ShellRoot {
         running: true
         repeat: true
         onTriggered: {
-            windowProc.running = true
             layoutProc.running = true
         }
     }
@@ -276,20 +260,10 @@ ShellRoot {
                         Layout.alignment: Qt.AlignVCenter
                         Layout.leftMargin: 2
                         Layout.rightMargin: 8
-                        color: root.colMuted
+			color: root.colBg
+			Layout.fillWidth: true
                     }
 
-                    Text {
-                        text: activeWindow
-                        color: root.colPurple
-                        font.pixelSize: root.fontSize
-                        font.family: root.fontFamily
-                        font.bold: true
-                        Layout.fillWidth: true
-                        Layout.leftMargin: 8
-                        elide: Text.ElideRight
-                        maximumLineCount: 1
-                    }
 
 		    MprisWidget {
 		      

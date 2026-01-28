@@ -46,5 +46,13 @@
  "~/Coding/pop-the-lock": {
     "name": "pop-the-lock",
     "command": "make rebuild && make run"
+ },
+ "~/Coding/sand-simulator": {
+   "name": "sand sim",
+   "command": "make rebuild && make run"
+ },
+ "~/Coding/isometric": {
+   "name": "iso",
+   "command": "make rebuild && make run"
  }
 }

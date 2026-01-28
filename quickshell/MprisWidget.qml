@@ -1,4 +1,5 @@
 import QtQuick
+import Qt5Compat.GraphicalEffects
 import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
@@ -104,6 +105,8 @@ Timer {
 		  source: mprisPlayer.trackArtUrl
 		  sourceSize.width: 100
 		  sourceSize.height: 100
+		  layer.enabled: true
+		  layer.effect: OpacityMask { maskSource: Rectangle { width: 100; height: 100; radius: 20; }}
 		  cache: true
 		}
 
