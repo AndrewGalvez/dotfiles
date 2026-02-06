@@ -128,9 +128,10 @@ RowLayout {
     }
 
     Item {
-        Layout.preferredWidth: 200
         Layout.fillWidth: false
         height: childrenRect.height
+	Layout.rightMargin: 1
+	width: childrenRect.width
 
         MprisWidget {
         }

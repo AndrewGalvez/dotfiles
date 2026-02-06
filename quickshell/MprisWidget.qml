@@ -33,7 +33,6 @@ Text {
     font.pixelSize: root.fontSize
     font.family: root.fontFamily
     font.bold: true
-    Layout.rightMargin: 8
 
 Timer {
     interval: 500
