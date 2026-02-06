@@ -200,7 +200,7 @@ ShellRoot {
 
 
                     Repeater {
-                        model: 9
+                        model: 10
 
                         Rectangle {
                             Layout.preferredWidth: 20
@@ -340,6 +340,16 @@ ShellRoot {
                         font.family: root.fontFamily
                         font.bold: true
                         Layout.rightMargin: 8
+NumberAnimation {
+      id: na2
+      duration: 1000;
+      target: popup.container
+      properties: "opacity"
+      from: 0.0
+      to: 1.0
+      onFinished: {
+      }
+    }
 
 			MouseArea {
 			  anchors.fill: parent
@@ -348,12 +358,15 @@ ShellRoot {
 			    popup.anchor.rect.x = pos.x - popup.width / 2 + width / 2
 			    popup.anchor.rect.y = pos.y + panelWindow.implicitHeight
 			    popup.visible = !popup.visible 
+			    popup.container.opacity = 0;
+			    na2.start();
 			  }
 			}
 
 			VolumePopup {
 			  id: popup
 			}
+
 
 		    }
 

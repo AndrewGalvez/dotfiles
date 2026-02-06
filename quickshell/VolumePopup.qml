@@ -138,7 +138,8 @@ PopupWindow {
       to: 0.0
       onFinished: {
 	popup.visible = false
-	container.opacity = 1
       }
     }
+    
+    
 }

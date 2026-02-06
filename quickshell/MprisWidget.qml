@@ -13,6 +13,7 @@ Text {
     property var mprisPlayer: Mpris.players.values.length > 0 ? Mpris.players.values[0] : null
     property real trackProgress: 0
     property real trackLen: 0
+    property bool shuffle: false
     property string txt: {
        if (!mprisPlayer)
             return "No player"
@@ -43,6 +44,7 @@ Timer {
             console.log("Position:", mprisPlayer.position, "Length:", mprisPlayer.length)
             trackProgress = mprisPlayer.position
             trackLen = mprisPlayer.length
+	    shuffle = mprisPlayer.shuffle
         }
     }
 }
@@ -210,6 +212,19 @@ Timer {
 			background: Rectangle { color: "transparent" }
 
                     }
+		    Button {
+                        icon.source: "https://img.icons8.com/?size=100&id=QqQ9t0fbQ4Yw&format=png&color=000000"
+                        icon.name: "next"
+                        icon.width: 60
+                        icon.height: 60
+                        icon.cache: true
+                        icon.color: mprisPlayer.shuffle ? root.colBlue : root.colYellow
+                        flat: true
+                        onClicked: if (mprisPlayer && mprisPlayer.canControl && mprisPlayer.shuffleSupported) mprisPlayer.shuffle = !mprisPlayer.shuffle
+			background: Rectangle { color: "transparent" }
+
+                    }
+		    
                 }
             }
         }

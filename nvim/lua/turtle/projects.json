@@ -54,5 +54,9 @@
  "~/Coding/isometric": {
    "name": "iso",
    "command": "make rebuild && make run"
+ },
+ "~/Coding/goldgoldgold": {
+    "name": "ohnepixel",
+    "command": "make rebuild && make run"
  }
 }
