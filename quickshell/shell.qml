@@ -26,80 +26,8 @@ ShellRoot {
     property int fontSize: 14
 
     // System info properties
-    property int cpuUsage: 0
-    property int memUsage: 0
-    property int diskUsage: 0
     property int volumeLevel: 0
-    property string activeWindow: "Window"
-    property string currentLayout: "Tile"
 
-    // CPU tracking
-    property var lastCpuIdle: 0
-    property var lastCpuTotal: 0
-
-    // CPU usage
-    Process {
-        id: cpuProc
-        command: ["sh", "-c", "head -1 /proc/stat"]
-        stdout: SplitParser {
-            onRead: data => {
-                if (!data) return
-                var parts = data.trim().split(/\s+/)
-                var user = parseInt(parts[1]) || 0
-                var nice = parseInt(parts[2]) || 0
-                var system = parseInt(parts[3]) || 0
-                var idle = parseInt(parts[4]) || 0
-                var iowait = parseInt(parts[5]) || 0
-                var irq = parseInt(parts[6]) || 0
-                var softirq = parseInt(parts[7]) || 0
-
-                var total = user + nice + system + idle + iowait + irq + softirq
-                var idleTime = idle + iowait
-
-                if (lastCpuTotal > 0) {
-                    var totalDiff = total - lastCpuTotal
-                    var idleDiff = idleTime - lastCpuIdle
-                    if (totalDiff > 0) {
-                        cpuUsage = Math.round(100 * (totalDiff - idleDiff) / totalDiff)
-                    }
-                }
-                lastCpuTotal = total
-                lastCpuIdle = idleTime
-            }
-        }
-        Component.onCompleted: running = true
-    }
-
-    // Memory usage
-    Process {
-        id: memProc
-        command: ["sh", "-c", "free | grep Mem"]
-        stdout: SplitParser {
-            onRead: data => {
-                if (!data) return
-                var parts = data.trim().split(/\s+/)
-                var total = parseInt(parts[1]) || 1
-                var used = parseInt(parts[2]) || 0
-                memUsage = Math.round(100 * used / total)
-            }
-        }
-        Component.onCompleted: running = true
-    }
-
-    // Disk usage
-    Process {
-        id: diskProc
-        command: ["sh", "-c", "df / | tail -1"]
-        stdout: SplitParser {
-            onRead: data => {
-                if (!data) return
-                var parts = data.trim().split(/\s+/)
-                var percentStr = parts[4] || "0%"
-                diskUsage = parseInt(percentStr.replace('%', '')) || 0
-            }
-        }
-        Component.onCompleted: running = true
-    }
 
     // Volume level (wpctl for PipeWire)
     Process {
@@ -115,51 +43,6 @@ ShellRoot {
             }
         }
         Component.onCompleted: running = true
-    }
-
-    // Current layout (Hyprland: dwindle/master/floating)
-    Process {
-        id: layoutProc
-        command: ["sh", "-c", "hyprctl activewindow -j | jq -r 'if .floating then \"Floating\" elif .fullscreen == 1 then \"Fullscreen\" else \"Tiled\" end'"]
-        stdout: SplitParser {
-            onRead: data => {
-                if (data && data.trim()) {
-                    currentLayout = data.trim()
-                }
-            }
-        }
-        Component.onCompleted: running = true
-    }
-
-    // Slow timer for system stats
-    Timer {
-        interval: 2000
-        running: true
-        repeat: true
-        onTriggered: {
-            cpuProc.running = true
-            memProc.running = true
-            diskProc.running = true
-            volProc.running = true
-        }
-    }
-
-    // Event-based updates for window/layout (instant)
-    Connections {
-        target: Hyprland
-        function onRawEvent(event) {
-            layoutProc.running = true
-        }
-    }
-
-    // Backup timer for window/layout (catches edge cases)
-    Timer {
-        interval: 200
-        running: true
-        repeat: true
-        onTriggered: {
-            layoutProc.running = true
-        }
     }
 
     Variants {
@@ -187,217 +70,139 @@ ShellRoot {
             }
 
             Rectangle {
-                anchors.fill: parent
                 color: root.colBg
+		anchors.fill: parent
 
-                RowLayout {
-                    anchors.fill: parent
-                    spacing: 0
+RowLayout {
+    spacing: 0
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+    anchors.right: parent.right
 
-                    Item { width: 8 }
+    Item { width: 8 }
 
-                    Item { width: 8 }
+    Item { width: 8 }
 
+    Repeater {
+        model: 10
 
-                    Repeater {
-                        model: 10
+        Rectangle {
+            width: 20
+            Layout.fillWidth: false
+            Layout.preferredHeight: parent.height
+            color: "transparent"
 
-                        Rectangle {
-                            Layout.preferredWidth: 20
-                            Layout.preferredHeight: parent.height
-                            color: "transparent"
+            property var workspace: Hyprland.workspaces.values.find(ws => ws.id === index + 1) ?? null
+            property bool isActive: Hyprland.focusedWorkspace?.id === (index + 1)
+            property bool hasWindows: workspace !== null
 
-                            property var workspace: Hyprland.workspaces.values.find(ws => ws.id === index + 1) ?? null
-                            property bool isActive: Hyprland.focusedWorkspace?.id === (index + 1)
-                            property bool hasWindows: workspace !== null
-
-                            Text {
-                                text: index + 1
-                                color: parent.isActive ? root.colCyan : (parent.hasWindows ? root.colCyan : root.colMuted)
-                                font.pixelSize: root.fontSize
-                                font.family: root.fontFamily
-                                font.bold: true
-                                anchors.centerIn: parent
-                            }
-
-                            Rectangle {
-                                width: 20
-                                height: 3
-                                color: parent.isActive ? root.colPurple : root.colBg
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                anchors.bottom: parent.bottom
-                            }
-
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: Hyprland.dispatch("workspace " + (index + 1))
-                            }
-                        }
-                    }
-
-                    Rectangle {
-                        Layout.preferredWidth: 1
-                        Layout.preferredHeight: 16
-                        Layout.alignment: Qt.AlignVCenter
-                        Layout.leftMargin: 8
-                        Layout.rightMargin: 8
-                        color: root.colMuted
-                    }
-
-                    Text {
-                        text: currentLayout
-                        color: root.colFg
-                        font.pixelSize: root.fontSize
-                        font.family: root.fontFamily
-                        font.bold: true
-                        Layout.leftMargin: 5
-                        Layout.rightMargin: 5
-                    }
-
-                    Rectangle {
-                        Layout.preferredWidth: 1
-                        Layout.preferredHeight: 16
-                        Layout.alignment: Qt.AlignVCenter
-                        Layout.leftMargin: 2
-                        Layout.rightMargin: 8
-			color: root.colBg
-			Layout.fillWidth: true
-                    }
+            Text {
+	      text: index == 9 ? 0 : index + 1
+                color: parent.isActive ? root.colPurple : (parent.hasWindows ? root.colCyan : root.colMuted)
+                font.pixelSize: root.fontSize
+                font.family: root.fontFamily
+                font.bold: true
+                anchors.centerIn: parent
+            }
 
 
-		    MprisWidget {
-		      
-		    } 
-
-                    Rectangle {
-                        Layout.preferredWidth: 1
-                        Layout.preferredHeight: 16
-                        Layout.alignment: Qt.AlignVCenter
-                        Layout.leftMargin: 0
-                        Layout.rightMargin: 8
-                        color: root.colMuted
-                    }
-
-                    Text {
-                        text: "CPU: " + cpuUsage + "%"
-                        color: root.colYellow
-                        font.pixelSize: root.fontSize
-                        font.family: root.fontFamily
-                        font.bold: true
-                        Layout.rightMargin: 8
-                    }
-
-                    Rectangle {
-                        Layout.preferredWidth: 1
-                        Layout.preferredHeight: 16
-                        Layout.alignment: Qt.AlignVCenter
-                        Layout.leftMargin: 0
-                        Layout.rightMargin: 8
-                        color: root.colMuted
-                    }
-
-                    Text {
-                        text: "Mem: " + memUsage + "%"
-                        color: root.colCyan
-                        font.pixelSize: root.fontSize
-                        font.family: root.fontFamily
-                        font.bold: true
-                        Layout.rightMargin: 8
-                    }
-
-                    Rectangle {
-                        Layout.preferredWidth: 1
-                        Layout.preferredHeight: 16
-                        Layout.alignment: Qt.AlignVCenter
-                        Layout.leftMargin: 0
-                        Layout.rightMargin: 8
-                        color: root.colMuted
-                    }
-
-                    Text {
-                        text: "Disk: " + diskUsage + "%"
-                        color: root.colBlue
-                        font.pixelSize: root.fontSize
-                        font.family: root.fontFamily
-                        font.bold: true
-                        Layout.rightMargin: 8
-                    }
-
-                    Rectangle {
-                        Layout.preferredWidth: 1
-                        Layout.preferredHeight: 16
-                        Layout.alignment: Qt.AlignVCenter
-                        Layout.leftMargin: 0
-                        Layout.rightMargin: 8
-                        color: root.colMuted
-                    }
-
-                    Text {
-			id: volText
-                        text: "Vol: " + volumeLevel + "%"
-                        color: root.colPurple
-                        font.pixelSize: root.fontSize
-                        font.family: root.fontFamily
-                        font.bold: true
-                        Layout.rightMargin: 8
-NumberAnimation {
-      id: na2
-      duration: 1000;
-      target: popup.container
-      properties: "opacity"
-      from: 0.0
-      to: 1.0
-      onFinished: {
-      }
+            MouseArea {
+                anchors.fill: parent
+                onClicked: Hyprland.dispatch("workspace " + (index + 1))
+            }
+        }
     }
 
-			MouseArea {
-			  anchors.fill: parent
-			  onClicked: {
-			    var pos = volText.mapToItem(panelWindow.contentItem, 0, 0)
-			    popup.anchor.rect.x = pos.x - popup.width / 2 + width / 2
-			    popup.anchor.rect.y = pos.y + panelWindow.implicitHeight
-			    popup.visible = !popup.visible 
-			    popup.container.opacity = 0;
-			    na2.start();
-			  }
-			}
+    Rectangle {
+        Layout.preferredWidth: 1
+        Layout.fillWidth: false
+        Layout.preferredHeight: 16
+        Layout.alignment: Qt.AlignVCenter
+        Layout.leftMargin: 8
+        Layout.rightMargin: 8
+        color: root.colMuted
+    }
 
-			VolumePopup {
-			  id: popup
-			}
+    Item {
+        Layout.fillWidth: true
+    }
 
+    Item {
+        Layout.preferredWidth: 200
+        Layout.fillWidth: false
+        height: childrenRect.height
 
-		    }
+        MprisWidget {
+        }
+    }
 
-                    Rectangle {
-                        Layout.preferredWidth: 1
-                        Layout.preferredHeight: 16
-                        Layout.alignment: Qt.AlignVCenter
-                        Layout.leftMargin: 0
-                        Layout.rightMargin: 8
-                        color: root.colMuted
-                    }
+    Rectangle {
+        Layout.preferredWidth: 1
+        Layout.fillWidth: false
+        Layout.preferredHeight: 16
+        Layout.alignment: Qt.AlignVCenter
+        Layout.leftMargin: 8
+        Layout.rightMargin: 8
+        color: root.colMuted
+    }
 
-                    Text {
-                        id: clockText
-                        text: Qt.formatDateTime(new Date(), "ddd, MMM dd - hh:mm:ss AP")
-                        color: root.colCyan
-                        font.pixelSize: root.fontSize
-                        font.family: root.fontFamily
-                        font.bold: true
-                        Layout.rightMargin: 8
+    Text {
+        id: volText
+        Layout.fillWidth: false
+        text: "Vol: " + volumeLevel + "%"
+        color: root.colPurple
+        font.pixelSize: root.fontSize
+        font.family: root.fontFamily
+        font.bold: true
+        Layout.rightMargin: 8
 
-                        Timer {
-                            interval: 1000
-                            running: true
-                            repeat: true
-                            onTriggered: clockText.text = Qt.formatDateTime(new Date(), "ddd, MMM dd - hh:mm:ss AP")
-                        }
-                    }
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                var pos = volText.mapToItem(panelWindow.contentItem, 0, 0)
+                popup.anchor.rect.x = pos.x - popup.width / 2 + width / 2
+                popup.anchor.rect.y = pos.y + panelWindow.implicitHeight
+                popup.visible = !popup.visible
+                popup.container.opacity = 0;
+                na2.start();
+            }
+        }
 
-                    Item { width: 8 }
-                }
+        VolumePopup {
+            id: popup
+        }
+    }
+
+    Rectangle {
+        Layout.preferredWidth: 1
+        Layout.preferredHeight: 16
+        Layout.alignment: Qt.AlignVCenter
+        Layout.leftMargin: 0
+        Layout.rightMargin: 8
+        color: root.colMuted
+        Layout.fillWidth: false
+    }
+
+    Text {
+        id: clockText
+        Layout.fillWidth: false
+        text: Qt.formatDateTime(new Date(), "ddd, MMM dd - hh:mm:ss AP")
+        color: root.colCyan
+        font.pixelSize: root.fontSize
+        font.family: root.fontFamily
+        font.bold: true
+        Layout.rightMargin: 8
+
+        Timer {
+            interval: 1000
+            running: true
+            repeat: true
+            onTriggered: clockText.text = Qt.formatDateTime(new Date(), "ddd, MMM dd - hh:mm:ss AP")
+        }
+    }
+
+    Item { width: 8 }
+}
             }
         }
     }
