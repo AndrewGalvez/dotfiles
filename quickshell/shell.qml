@@ -128,7 +128,7 @@ RowLayout {
     }
 
     Item {
-        Layout.fillWidth: false
+        Layout.fillWidth: true 
         height: childrenRect.height
 	Layout.rightMargin: 1
 	width: childrenRect.width
