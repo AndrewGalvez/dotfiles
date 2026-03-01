@@ -24,8 +24,18 @@ Text {
         
         const title = meta["xesam:title"] || meta.trackTitle || "Unknown"
         const artist = meta["xesam:artist"]?.[0] || meta.trackArtist || "Unknown"
+	let playbackState = mprisPlayer.playbackState.toString()
+	if (mprisPlayer.playbackState == MprisPlaybackState.Stopped) {
+	  playbackState = "■"
+	}
+	else if (mprisPlayer.playbackState == MprisPlaybackState.Playing) {
+	  playbackState = "▶"
+	}
+	else {
+	  playbackState = "⏸"
+	}
 
-        return `${title} - ${artist}`;
+        return `${playbackState} ${title} - ${artist}`;
     }
 
     text: txt

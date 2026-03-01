@@ -1,9 +1,9 @@
 #!/bin/bash
 
-if pgrep -x quickshell > /dev/null; then
-    pkill -x quickshell
+if pgrep -x "qs|quickshell" > /dev/null; then
+    pkill -x "qs|quickshell"
     echo "Quickshell stopped"
 else
-    quickshell &
+    qs &
     echo "Quickshell started"
 fi
