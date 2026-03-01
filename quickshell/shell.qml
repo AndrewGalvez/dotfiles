@@ -137,16 +137,6 @@ RowLayout {
         }
     }
 
-    Rectangle {
-        Layout.preferredWidth: 1
-        Layout.fillWidth: false
-        Layout.preferredHeight: 16
-        Layout.alignment: Qt.AlignVCenter
-        Layout.leftMargin: 8
-        Layout.rightMargin: 8
-        color: root.colMuted
-    }
-
     Text {
         id: volText
         Layout.fillWidth: false
