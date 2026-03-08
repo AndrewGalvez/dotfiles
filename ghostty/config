@@ -49,3 +49,6 @@
 # resize-overlay-duration = 4s 200ms
 
 theme = Everforest Dark Hard
+working-directory = home
+window-inherit-working-directory = true
+gtk-single-instance = false
