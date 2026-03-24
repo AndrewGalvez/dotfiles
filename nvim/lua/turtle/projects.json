@@ -58,5 +58,9 @@
  "~/Coding/goldgoldgold": {
     "name": "ohnepixel",
     "command": "make rebuild && make run"
+ },
+ "~/Coding/discord": {
+   "name" : "dc",
+   "command": "g++ main.cpp -o main && ./main"
  }
 }
