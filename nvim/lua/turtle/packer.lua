@@ -72,4 +72,10 @@ return require('packer').startup(function(use)
 			vim.keymap.set({ "v", "n" }, "gf", require("actions-preview").code_actions)
 		end,
 	}
+	use {
+		'nvim-tree/nvim-tree.lua',
+		requires = {
+			'nvim-tree/nvim-web-devicons', -- optional
+		},
+	}
 end)
