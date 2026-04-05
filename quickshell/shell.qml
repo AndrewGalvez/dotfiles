@@ -45,9 +45,10 @@ ShellRoot {
             property var modelData
             screen: modelData
 
-            WlrLayershell.layer: WlrLayer.Top
-            WlrLayershell.exclusiveZone: -1
+	    exclusiveZone: 0
             WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
+
+	    mask: Region {}
 
             anchors {
                 top: true
