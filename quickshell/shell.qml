@@ -1,5 +1,6 @@
 import Quickshell
 import Quickshell.Services.SystemTray
+import Quickshell.Services.UPower
 import Quickshell.Wayland
 import Quickshell.Io
 import Quickshell.Hyprland
@@ -140,6 +141,38 @@ ShellRoot {
                             }
                         }
                     }
+
+		    Item { width: 10 }
+
+		    Rectangle {
+		      visible: UPower.displayDevice.isLaptopBattery
+		      color: Qt.rgba(0.5,0.5,0.5,0.5)
+		      radius: 4
+		      Layout.rightMargin: 8
+		      Layout.alignment: Qt.AlignVCenter
+		      implicitWidth: batteryText.width + 12
+		      implicitHeight: 22
+		      Text {
+			id: batteryText
+			anchors.centerIn: parent
+
+			function formatSeconds(seconds) {
+			  let t = seconds
+			  let nseconds = t % 60;
+			  t = Math.floor(t / 60);
+			  let mins = t % 60;
+			  t = Math.floor(t / 60);
+			  let hours = t % 60;
+			  return hours + (hours > 0 ? ":" : "") + mins + ":" + nseconds
+			}
+
+			text: Math.round(UPower.displayDevice.percentage * 100) + "% (" + (UPower.displayDevice.changeRate < 0 ? formatSeconds(UPower.displayDevice.timeToFull) : formatSeconds(UPower.displayDevice.timeToEmpty)) + ")"
+			color: root.colCyan
+			font.pixelSize: root.fontSize
+			font.family: root.fontFamily
+			font.bold: true
+		      }
+		    }
 
                     Item { width: 18 }
                 }
