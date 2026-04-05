@@ -55,7 +55,7 @@ ShellRoot {
                 right: true
             }
 
-            implicitHeight: 45
+            implicitHeight: 65
             color: root.colBg
 
             Rectangle {
