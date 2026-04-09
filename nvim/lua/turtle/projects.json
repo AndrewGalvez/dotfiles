@@ -19,48 +19,8 @@
   "name": "blink",
   "command": "sudo /home/turtle/.pico-sdk/picotool/2.2.0/picotool/picotool load build/blink.elf"
  },
- "~/Coding/tetris": {
-   "name": "tetris",
-   "command": "make rebuild && make run"
- },
- "~/Coding/pft": {
-   "name": "pft",
-   "command": "gcc main.c -o main && ./main"
- },
- "~/Coding/flappy-bird": {
-   "name": "flappy",
-   "command": "make rebuild && make run"
- },
- "~/Coding/breakout": {
-   "name": "breakout",
-   "command": "make rebuild && make run"
- },
- "~/Coding/email": {
-   "name": "email",
-   "command": "g++ main.cpp -o main -lsqlite3 -lpthread && ./main && rm main"
- },
- "~/Coding/grapple": {
-   "name": "grapple",
-   "command": "make rebuild && make run"
- },
- "~/Coding/pop-the-lock": {
-    "name": "pop-the-lock",
-    "command": "make rebuild && make run"
- },
- "~/Coding/sand-simulator": {
-   "name": "sand sim",
-   "command": "make rebuild && make run"
- },
- "~/Coding/isometric": {
-   "name": "iso",
-   "command": "make rebuild && make run"
- },
- "~/Coding/goldgoldgold": {
-    "name": "ohnepixel",
-    "command": "make rebuild && make run"
- },
- "~/Coding/discord": {
-   "name" : "dc",
-   "command": "g++ main.cpp -o main && ./main"
+ "~/Coding/capitalism": {
+   "name": "capitalism",
+   "command": "g++ src/main.cpp -o main -lraylib && ./main"
  }
 }

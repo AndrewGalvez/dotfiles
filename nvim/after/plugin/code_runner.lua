@@ -1,9 +1,8 @@
 require('code_runner').setup({
-	focus = true,
+	focus = false,
 	project_path = '/home/turtle/.config/nvim/lua/turtle/projects.json',
-	mode = "float",
-	float = {
-		border = 'rounded',
+	term = {
+	  size = 2
 	},
 	filetype = {
 		java = {

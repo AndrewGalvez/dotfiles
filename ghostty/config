@@ -52,4 +52,4 @@ window-inherit-working-directory = true
 gtk-single-instance = false
 theme = Dark Modern
 background-opacity = 0.3
-background-blur=3
+background-blur=17
