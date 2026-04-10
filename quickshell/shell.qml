@@ -179,7 +179,6 @@ ShellRoot {
 Rectangle {
     color: Qt.rgba(0.5,0.5,0.5,0.5)
     radius: 4
-    Layout.rightMargin: 8
     Layout.alignment: Qt.AlignVCenter
     implicitWidth: bluetoothText.width + 32
     implicitHeight: 22
